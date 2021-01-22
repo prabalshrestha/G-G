@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.w3.org/1000/xhtml">
+<head>
+<title>G&G</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/css.css">
+<link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+	<div>
+		<div th:replace="common/header :: navbar" />
+		<div class="bg-light py-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mb-0">
+						<a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
+							class="text-black">Sign In</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="site-section">
+			<div class="container">
+
+				<div class="row">
+
+					<!-- Sign In -->
+					<div class="col-md-6 mb-5 mb-md-0">
+
+						<!-- Sign In -->
+						<h2 class="h3 mb-3 text-black">Sign In</h2>
+						<div class="p-3 p-lg-5 border"
+							th:classappend="${classActiveLogin}? 'in active'">
+
+							
+							<form th:action="@{/login}" method="post">
+								<div class="form-group row mb-5">
+									<div class="col-md-12">
+										<label for="newUsername" class="text-black">Username<span class="text-danger">*</span>
+										</label> <input required="required" type="text" class="form-control" id="username"
+											name="username">
+									</div>
+
+								</div>
+
+								<div class="form-group">
+									<label for="password" class="text-black">Account
+										Password</label> <input type="password" required="required" class="form-control"
+										id="password" name="password">
+								</div>
+								<div class="text-danger mb-2 mt-2" th:if="${param.error != null}">Incorrect Username or Password</div>
+								<div class="form-group">
+									<button type="submit"
+										class="btn btn-primary btn-lg py-3 btn-block">Sign
+										In</button>
+								</div>
+							</form>
+
+						</div>
+
+						<!-- Forget Password -->
+						<h2 class="h3 mb-3 text-black mt-5">Forget Password ?</h2>
+						<div class="p-3 p-lg-5 border"
+							th:classappend="${classActiveForgetPassword}? 'in active'">
+							
+							<div class="alert alert-success " th:if="${forgetPasswordEmailSent}">Email has been sent</div>
+							<form th:action="@{/forgetPassword}" method="post">
+								<div class="form-group row mb-5">
+									<div class="col-md-12">
+										<label for="recoverEmail" class="text-black">Email
+											Address <span class="text-danger">*</span>
+										</label> <input type="text" class="form-control" id="recoverEmail"
+											name="email">
+									</div>
+
+								</div>
+								<div class="text-danger mb-2 mt-2" th:if="${emailNotExist}">Email doesnt exists</div>
+								
+								<div class="form-group">
+									<button type="submit"
+										class="btn btn-primary btn-lg py-3 btn-block"
+										>Verify</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+
+
+
+
+
+					<!-- Create acc -->
+					<div class="col-md-6 mb-5 mb-md-0"
+						th:classappend="${classActiveNewUser}? 'in active'">
+						<h2 class="h3 mb-3 text-black">Create a Account</h2>
+						<div class="p-3 p-lg-5 border">
+							<div class="alert alert-info" th:if="${emailSent}">An email
+								has been sent to your email please validate your email and
+								update your password</div>
+							<form th:action="@{/newUser}" method="post">
+								<!-- Name -->
+
+								<div class="form-group row">
+									<div class="col-md-12">
+
+										<label for="newUsername" class="text-black">Username<span
+											class="text-danger">*</span></label> &nbsp; <span
+											th:if="${usernameExists}">Username already exists</span> <input
+											required="required" type="text" class="form-control"
+											id="newUsername" name="username">
+									</div>
+								</div>
+								<!-- Email -->
+								<div class="form-group row mb-5">
+									<!-- Email -->
+									<div class="col-md-12">
+										<label for="email" class="text-black">Email Address <span
+											class="text-danger">*</span>
+										</label> &nbsp; <span th:if="${emailExists}">Email already
+											exists</span> <input required="required" type="text"
+											class="form-control" id="email" name="email">
+									</div>
+								</div>
+
+								<!-- Button -->
+								<div class="form-group">
+									<button type="submit"
+										class="btn btn-primary btn-lg py-3 btn-block">Sign Up</button>
+								</div>
+							</form>
+						</div>
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+	</div>
+</body>
+</html>

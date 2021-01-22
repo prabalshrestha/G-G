@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.w3.org/1000/xhtml">
+<head>
+<title>G&G</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/css.css">
+<link rel="stylesheet" href="/css/single.css">
+</head>
+<body>
+	<div>
+		<div th:replace="common/header :: navbar" />
+
+		<div class="bg-light py-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mb-0">
+						<a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
+							class="text-black">HP Specter</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="site-section">
+			<div class="container">
+
+				<form th:action="@{shoppingCart/addItem}" method="post">
+					<div class="row">
+						<input hidden="hidden" th:field="*{book.id}" />
+						<div class="col-md-6">
+							<img src="image/lp1.png" class="img-fluid"
+								th:src="#{adminPath}+@{/image/book/}+${book.id}+'.png'">
+						</div>
+						<div class="col-md-6">
+							<h2 class="text-black" th:text="${book.title}">
+								<!-- Product Name -->
+							</h2>
+							<p th:utext="${book.description}"></p>
+							<p >
+								$<strong class="text-primary h4" th:text="${book.ourPrice}"> <!-- Price  -->
+								</strong>
+							</p>
+
+							<div class="mb-5">
+								<div class="input-group mb-3" style="max-width: 120px;">
+									<select name="qty">
+										<option th:each="qty: ${qtyList}" th:value="${qty}"
+											th:text="${qty}"></option>
+									</select>
+
+								</div>
+
+							</div>
+							<p>
+								<button class="buy-now btn btn-sm btn-primary" type="submit">Add
+									To Cart</button>
+							</p>
+
+
+							<div th:if="${addBookSuccess}" class="alert alert-success" style=" width: 158px;
+    height: 55px;padding: 10px 20px;">
+								<i class="fa fa-check" aria-hidden="true"
+									style="color: forestgreen"></i>Added to cart.
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+
+		<div th:replace="common/header :: body-bottom-scripts" />
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+    line-height: 1.7;
+    color: #8c92a0;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.text-black {
+    color: #000;
+}
+.display-3 {
+    font-size: 70;
+    font-weight: 350;
+    line-height: 1.2;
+}
+.lead {
+    font-size: 23;
+    font-weight: 300;
+}
+.btn.btn-primary {
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: .2em;
+}
+.btn.btn-sm {
+    font-size: 14px !important;
+    padding: 10px 20px !important;
+}
+.btn {
+    text-transform: uppercase;
+    position: relative;
+    -webkit-transition: 0.2s all ease-in-out !important;
+    -o-transition: 0.2s all ease-in-out !important;
+    transition: 0.2s all ease-in-out !important;
+    top: 0;
+    letter-spacing: .05em;
+}

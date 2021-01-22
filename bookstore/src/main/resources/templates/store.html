@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.w3.org/1000/xhtml">
+<head>
+<title>G&G</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/css.css">
+    <link rel="stylesheet" href="/css/shop.css">  
+    
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js"></script>
+
+</head>
+
+<body>
+		<div th:replace="common/header :: navbar" />
+		
+		<div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+        </div>
+      </div>
+    </div>
+        <div class="site-section">
+            <div class="container">
+                 <div class="row mb-5">
+          <div class="col-md-9 order-2">
+
+            <div class="row">
+              <div class="col-md-12 mb-5">
+                <div class="float-md-left mb-4"><h2 class="text-black h2">Shop All</h2></div>
+                <div class="d-flex">
+                </div>
+              </div>
+            </div>
+            <table border="0" id="bookList" class="dataTable no-footer">
+                <thead><tr><th> </th></tr><tr></thead>
+                <tbody>
+                <tr class="book-item" data-th-each="book : ${bookList}">
+                    <td>
+                    
+                        <div th:if="${book != null}">
+                            <div class="row" style="margin-bottom: 100px;">
+                            
+                                <div class="col-3">
+                                    <a th:href="@{/bookDetail?id=}+${book.id}"><img width="2000" height="1300" class="img-fluid shelf-book" th:src="#{adminPath}+@{/image/book/}+${book.id}+'.png'"/></a>
+                                </div>
+                                <div class="col-9">
+                                    <a th:href="@{/bookDetail?id=}+${book.id}"><h4 th:text="${book.title}"></h4></a>
+                                    <a th:href="@{/bookDetail?id=}+${book.id}"><span th:text="${#strings.capitalize(book.format)}"></span></a>                                 
+                                    <a th:href="@{/bookDetail?id=}+${book.id}"><span style="font-size: x-large; color: #db3208;">$<span th:text="${#numbers.formatDecimal(book.ourPrice, 0, 'COMMA', 2, 'POINT')}"></span></span></a>
+                                    <span style="text-decoration: line-through;">$<span th:text="${#numbers.formatDecimal(book.listPrice, 0, 'COMMA', 2, 'POINT')}"></span></span>
+								 <a th:href="@{/bookDetail?id=}+${book.id}"><button class="buy-now btn btn-sm btn-primary float-right" > Add to Cart</button></a>
+                                   
+                                </div>
+                            
+                            </div>
+                        </div>
+                       
+                    </td>                                
+                </tr>
+                </tbody>
+            </table>
+        
+
+          </div>
+
+          <div class="col-md-3 order-1 mb-5 mb-md-0">
+            <div class="border p-4 rounded mb-4">
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
+              <ul class="list-unstyled mb-0">
+              <li class="mb-1"><a class="d-flex" th:href="@{/store(category='all')}" th:classappend="${activeAll}? 'active'" >All</a></li>
+               <li class="mb-1"> <a class="d-flex" th:href="@{/searchByCategory(category='Audio')}" th:classappend="${activeAudio}? 'active'" >Audio</a></li>
+               <li class="mb-1"> <a class="d-flex" th:href="@{/searchByCategory(category='Laptop')}" th:classappend="${activeLaptop}? 'active'" >Laptop</a></li>
+                <li class="mb-1"><a class="d-flex" th:href="@{/searchByCategory(category='Tablet')}" th:classappend="${activeTablet}? 'active'" >Tablet</a></li>
+               <li class="mb-1"> <a class="d-flex" th:href="@{/searchByCategory(category='Phone')}" th:classappend="${activePhone}? 'active'" >Phone</a></li>
+                <li class="mb-1"><a class="d-flex" th:href="@{/searchByCategory(category='Console')}" th:classappend="${activeConsole}? 'active'" >Console</a></li>
+           
+              </ul>
+            </div>
+
+           
+          </div>
+        </div>
+            </div>
+        </div>
+<div th:replace="common/header :: body-bottom-scripts" />
+<script>
+$(document).ready(function() {
+    $('#bookList').DataTable({
+        "lengthMenu": [ [5,10,15,20,-1], [5,10,15,20,"All"] ],
+        "ordering": false,
+        stateSave: true
+    });
+
+    $("#bookList").on('page.dt', function() {
+        $('html, body').animate({
+            scrollTop: $('#bookList').offset().top
+        }, 200);
+    });
+});
+</script>
+</body>
+</html>

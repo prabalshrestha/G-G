@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+<title>G&G</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/css.css">
+</head>
+<body>
+	<div th:fragment="navbar">
+		<header class="site-navbar" role="banner">
+			<!-- top nav -->
+			<div class="navbar na">
+				<div class="container">
+
+					<div class="col-lg-3">
+						<form class="navbar-form navbar-left sea"  th:action="@{/searchBook}" method="post">
+
+							<div class="input-group">
+								<div class="input-group-btn  ">
+									<button class="btn btn-default form-control" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+									<input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Search"/>
+
+							</div>
+						</form>
+					</div>
+					<div class="col-lg-4 ">
+						<div class="navbar-header g&g ">
+							<a class="navbar-brand bd" th:href="@{/.}"><H1>G&G</H1></a>
+						</div>
+					</div>
+					<ul class="nav navbar-nav navbar-right" id="carts">
+						
+						<li><a sec:authorize="isAnonymous()" class="logo" th:href="@{/login}"><span
+								class="fa fa-user"></span></a></li>
+						
+						<li><a sec:authorize="isAuthenticated()" class="logo" th:href="@{/myProfile}"><span
+								class="fa fa-user"></span></a></li>
+						
+						<li><a class="logo" th:href="@{/shoppingCart/cart}"><span
+								class="fa fa-shopping-cart"></span></a></li>
+								
+						<li><a sec:authorize="isAuthenticated()" class="logo" th:href="@{/logout}"><span
+								class="fa fa-sign-out"></span></a></li>
+						
+						
+						
+						
+					</ul>
+				</div>
+
+			</div>
+			<!-- 2nd nav bar -->
+			<nav class=" navbar">
+				<div class="container ">
+
+					<ul class="nav navbar-nav navbar2">
+						<li class="active"><a th:href="@{/}">HOME</a></li>
+						<li><a th:href="@{/store}">STORE</a></li>
+						<li><a th:href="@{/about}">ABOUT</a></li>
+						<li><a th:href="@{/contact}">CONTACT</a></li>
+					</ul>
+				</div>
+			</nav>
+
+		</header>
+	</div> 
+	<div th:fragment="body-bottom-scripts">
+	
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+    <script type="text/javascript" th:src="@{/js/datatables.min.js}"></script>
+	</div>
+</body>
+</html>

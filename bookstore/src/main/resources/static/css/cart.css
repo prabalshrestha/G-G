@@ -1,0 +1,20 @@
+
+.site-blocks-table .product-thumbnail {
+    width: 200px;
+}
+.site-blocks-table td {
+    padding: 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #212529;
+}
+.site-blocks-table td {
+    padding: 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #212529;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}

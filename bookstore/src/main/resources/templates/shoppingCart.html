@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.w3.org/1000/xhtml">
+<head>
+<title>G&G</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/css.css">
+<link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+	<div>
+		<div th:replace="common/header :: navbar" />
+		<div class="bg-light py-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 mb-0">
+						<a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
+							class="text-black">Contact</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="site-section">
+			<div class="container">
+
+				<div class="row mb-5">
+
+					<div class="site-blocks-table col-md-12">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th class="product-thumbnail">Image</th>
+									<th class="product-name">Product</th>
+									<th class="product-price">Price</th>
+									<th class="product-quantity">Quantity</th>
+									<th class="product-remove">Remove</th>
+								</tr>
+							</thead>
+
+
+							<tbody>
+								<tr th:each="cartItem : ${cartItemList}">
+									<form th:action="@{/shoppingCart/updateCartItem}" method="post">
+									<td class="product-thumbnail">
+										<!-- Imagee --> <a
+										th:href="@{bookDetail(id=${cartItem.book.id})}"> <img
+											class="img-fluid " 
+											th:src="#{adminPath}+@{/image/book/}+${cartItem.book.id}+'.png'" />
+									</a>
+
+									</td>
+									<td class="product-name">
+										<!--product-name --> <a
+										th:href="@{/bookDetail?id=}+${cartItem.book.id}">
+											<h2 class="h5 text-black" th:text="${cartItem.book.title}"></h2>
+									</a>
+
+									</td>
+
+									<td>
+										<!-- Price --> $<span th:text="${cartItem.book.ourPrice}"
+										th:style="${cartItem.book.inStockNumber}==0? 'text-decoration : line-through' : ''"></span>
+									</td>
+
+									<td><input hidden="hidden" name="id" th:value="${cartItem.id}" /> 
+									<input th:id="${cartItem.id}"
+										th:name="qty" th:disabled="${cartItem.book.inStockNumber==0}"
+										class="form-control cartItemQty col-1 pl-2 pr-1"
+										th:value="${cartItem.qty}" />
+										<button style="display: none;"
+											th:id="'update-item-'+${cartItem.id}" type="submit"
+											>Update</button></td>
+									<td>
+										<!-- Remove --> <a
+										th:href="@{/shoppingCart/removeItem?id=}+${cartItem.id}"
+										class="btn btn-primary btn-sm">X</a>
+									</td>
+									</form>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+
+				</div>
+				<div th:if="${emptyCart}" class="alert alert-warning">Your
+					cart seems to be empty</div>
+
+				<div class="row">
+
+					<!-- Update and continue buttons -->
+					<div class="col-md-6">
+						<div class="row mb-5">
+
+							<div class="col-md-6">
+								<a class="btn btn-outline-primary btn-sm btn-block" th:href="@{/store}">Continue Shopping</a>
+							</div>
+						</div>
+
+					</div>
+					<!-- Cart total -->
+					<div class="col-md-6 pl-5">
+						<div class="row justify-content-end">
+							<div class="col-md-7">
+								<div class="row">
+									<div class="col-md-12 text-right border-bottom mb-5">
+										<h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+									</div>
+								</div>
+
+								<div class="row mb-5">
+									<div class="col-md-6">
+										<span class="text-black">Total</span>
+									</div>
+									<div class="col-md-6 text-right">
+										<strong class="text-black"> <!-- total display here -->
+											$<span th:text="${shoppingCart.grandTotal}"></span>
+										</strong>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										 <a class="btn btn-primary btn-lg py-3 btn-block" th:href="@{/checkout(id=${shoppingCart.id})}">
+											Proceed To Checkout</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div th:replace="common/header :: body-bottom-scripts" />
+
+
+	</div>
+</body>
+</html>

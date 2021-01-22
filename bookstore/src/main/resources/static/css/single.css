@@ -1,0 +1,22 @@
+body {
+    line-height: 1.7;
+    color: #8c92a0;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.text-black {
+    color: #000;
+}
+b, strong {
+    font-weight: 400;
+}
+.btn {
+    text-transform: uppercase;
+    position: relative;
+    -webkit-transition: 0.2s all ease-in-out !important;
+    -o-transition: 0.2s all ease-in-out !important;
+    transition: 0.2s all ease-in-out !important;
+    top: 0;
+    letter-spacing: .05em;
+}
