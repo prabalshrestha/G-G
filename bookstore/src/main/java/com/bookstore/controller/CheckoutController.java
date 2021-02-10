@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import com.bookstore.service.*;
+import com.bookstore.utility.MailConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,14 +27,6 @@ import com.bookstore.domain.User;
 import com.bookstore.domain.UserBilling;
 import com.bookstore.domain.UserPayment;
 import com.bookstore.domain.UserShipping;
-import com.bookstore.service.BillingAddressService;
-import com.bookstore.service.CartItemService;
-import com.bookstore.service.PaymentService;
-import com.bookstore.service.ShippingAddressService;
-import com.bookstore.service.ShoppingCartService;
-import com.bookstore.service.UserPaymentService;
-import com.bookstore.service.UserService;
-import com.bookstore.service.UserShippingService;
 import com.bookstore.utility.USConstants;
 @Controller
 public class CheckoutController {
@@ -40,9 +35,13 @@ public class CheckoutController {
     private BillingAddress billingAddress = new BillingAddress();
     private Payment payment = new Payment();
 
-	
+    @Autowired
+	private JavaMailSender mailSender;
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private CartItemService cartItemService;
@@ -63,6 +62,9 @@ public class CheckoutController {
 	
     @Autowired
     private UserPaymentService userPaymentService;
+
+    @Autowired
+    private MailConstructor mailConstructor;
 	
 	@RequestMapping("/checkout")
     public String checkout(
@@ -167,10 +169,23 @@ public class CheckoutController {
 	        }
 
 
-	        User user = userService.findByUsername(principal.getName());
+           User user = userService.findByUsername(principal.getName());
+           Order order = orderService.createOrder(shoppingCart, shippingAddress, billingAddress, payment, shippingMethod, user);
 
-	     
-	        shoppingCartService.clearShoppingCart(shoppingCart);
+           mailSender.send(mailConstructor.constructOrderConfirmationEmail(user, order, Locale.ENGLISH));
+           shoppingCartService.clearShoppingCart(shoppingCart);
+
+           LocalDate today = LocalDate.now();
+           LocalDate estimatedDeliveryDate;
+
+           if(shippingMethod.equals("groundShipping")) {
+               estimatedDeliveryDate = today.plusDays(5);
+           } else {
+               estimatedDeliveryDate = today.plusDays(3);
+           }
+
+           model.addAttribute("estimatedDeliveryDate", estimatedDeliveryDate);
+
 
 
 	        return "thankyou";
